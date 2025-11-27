@@ -11,4 +11,5 @@ plugins {
 }
 
 rootProject.name = 'helix-automation'
-include('app', 'list', 'utilities')
+// Keep the small 'utilities' module if present — app/list were example modules and have been removed
+include('utilities')

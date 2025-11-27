@@ -7,10 +7,11 @@ import com.helix.automation.tests.BaseTest;
 
 public class NotesTests extends BaseTest {
     @Test
-    public void testComposeNoteRequiresAuth() {
+    public void testComposeNoteVisibleWhenLoggedIn() {
         NotesPage notes = new NotesPage();
         notes.open();
-        Assert.assertTrue(driver.getCurrentUrl().contains("/auth/login") || driver.getCurrentUrl().contains("/auth/signup"), "Compose note should require auth");
+        // BaseTest auto-logs in, so compose should be visible for an authenticated user
+        Assert.assertTrue(notes.isComposeNoteVisible(), "Compose note should be visible for authenticated users");
     }
 
     @Test

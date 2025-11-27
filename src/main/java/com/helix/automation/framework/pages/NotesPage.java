@@ -24,6 +24,14 @@ public class NotesPage extends BasePage {
     public boolean isFocusTagsAreaVisible() { return isVisible(focusTagsArea); }
     public boolean isTrendingTopicsVisible() { return isVisible(trendingTopics); }
 
+    // checks whether a note with the given title appears on the page
+    public boolean isNotePresent(String title) {
+        try {
+            return isVisible(By.xpath("//h3[contains(text(),'" + title.replace("'","\\'") + "') or contains(.,'" + title.replace("'","\\'") + "') ]"));
+        } catch (Exception e) {
+            return false;
+        }
+    }
     public void clickComposeNote() { click(composeNoteBtn); }
     public void clickTag(String tagName) { click(By.xpath("//span[contains(@class,'tag') and contains(text(),'" + tagName + "')]" ) ); }
 }
