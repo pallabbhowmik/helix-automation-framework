@@ -6,6 +6,8 @@ plugins {
     id 'buildlogic.java-library-conventions'
 }
 
+// utilities was generated with a sample dependency on the removed 'list' module.
+// No external subproject dependencies are required here for the framework.
 dependencies {
-    api project(':list')
+    // keep empty for now
 }
