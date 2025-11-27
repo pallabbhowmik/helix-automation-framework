@@ -1,6 +1,8 @@
 package com.helix.automation.tests.api;
 
 import com.helix.automation.framework.api.spec.ApiSpecs;
+import com.helix.automation.framework.api.clients.AuthApi;
+import com.helix.automation.framework.config.ConfigManager;
 import com.helix.automation.framework.api.models.AuthRequest;
 import com.helix.automation.framework.api.models.AuthResponse;
 import org.testng.Assert;
@@ -14,6 +16,17 @@ public class AuthApiTests {
     public void setBaseToTarget() {
         // ensure tests default to the public PassTheNote host
         System.setProperty("api.baseUrl", System.getProperty("api.baseUrl", "https://www.passthenote.com"));
+        // attempt to authenticate using configured credentials so other API calls use a valid token
+        try {
+            String user = ConfigManager.getUsername();
+            String pass = ConfigManager.getPassword();
+            if (user != null && pass != null && !user.isEmpty() && !pass.isEmpty()) {
+                var r = AuthApi.login(new com.helix.automation.framework.api.models.AuthRequest(user, pass));
+                if (r != null && r.getToken() != null && !r.getToken().isEmpty()) {
+                    ApiSpecs.setAuthToken(r.getToken());
+                }
+            }
+        } catch (Exception ignored) { /* keep tests defensive */ }
     }
 
     @Test(groups = "api")

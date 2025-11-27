@@ -4,6 +4,7 @@ import com.helix.automation.framework.api.models.AuthRequest;
 import com.helix.automation.framework.api.models.AuthResponse;
 import com.helix.automation.framework.api.spec.ApiSpecs;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 // No WireMock here — tests use the live host by default
@@ -11,6 +12,18 @@ import org.testng.annotations.Test;
 public class AuthApiValidationTests {
     // Tests target the live host at https://www.passthenote.com by default. We keep assertions defensive
     // so tests stay informative even if the remote server responds differently.
+
+    @BeforeClass
+    public void authenticateIfConfigured() {
+        try {
+            String user = System.getProperty("web.username", com.helix.automation.framework.config.ConfigManager.getUsername());
+            String pass = System.getProperty("web.password", com.helix.automation.framework.config.ConfigManager.getPassword());
+            if (user != null && pass != null && !user.isEmpty() && !pass.isEmpty()) {
+                var r = com.helix.automation.framework.api.clients.AuthApi.login(new com.helix.automation.framework.api.models.AuthRequest(user, pass));
+                if (r != null && r.getToken() != null && !r.getToken().isEmpty()) ApiSpecs.setAuthToken(r.getToken());
+            }
+        } catch (Exception ignored) { }
+    }
 
     @Test(groups = "api")
     public void testSuccessfulLoginReturnsToken_nonNull() {
