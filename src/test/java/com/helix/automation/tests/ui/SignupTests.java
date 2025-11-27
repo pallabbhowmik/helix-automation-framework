@@ -12,11 +12,12 @@ public class SignupTests extends BaseTest {
         SignupPage signup = new SignupPage();
         signup.open();
         signup.enterFullName("Automation Tester");
-        String uniqueEmail = "automation+" + System.currentTimeMillis() + "@example.com";
+        String uniqueEmail = "automation+" + System.currentTimeMillis() + "@passthenote.com";
         signup.enterEmail(uniqueEmail);
         signup.enterPassword("StrongPwd@12345");
         signup.enterConfirmPassword("StrongPwd@12345");
         signup.clickContinue();
+        // After signup, should redirect to dashboard or show success toast
         Assert.assertFalse(signup.isErrorVisible(), "No error should be visible after signup");
     }
 

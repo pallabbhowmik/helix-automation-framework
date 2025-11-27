@@ -3,25 +3,77 @@ package com.helix.automation.framework.pages;
 import com.helix.automation.framework.core.BasePage;
 import com.helix.automation.framework.config.ConfigManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
 
 public class ApiExplorerPage extends BasePage {
-    private final By header = By.cssSelector("[data-test='api-header'], h1, .api-header");
-    private final By baseUrl = By.cssSelector("[data-test='api-base-url'], .api-base-url");
-    private final By endpointList = By.cssSelector("[data-test='endpoint-list'], .endpoint-list");
-    private final By codePanel = By.cssSelector("[data-test='code-panel'], .code-sample");
-    private final By sendButton = By.cssSelector("[data-test='send-request'], button:contains('Send')");
-    private final By responseStatus = By.cssSelector("[data-test='response-status'], .response-status");
-    private final By responseBody = By.cssSelector("[data-test='response-body'], .response-body");
-    private final By quickAuth = By.cssSelector("[data-test='quick-auth']");
+    // Helper to try multiple locator strategies in order: id, name, css, xpath
+    private WebElement findElement(String id, String name, String css, String xpath) {
+        try { return driver.findElement(By.id(id)); } catch (Exception ignored) {}
+        try { return driver.findElement(By.name(name)); } catch (Exception ignored) {}
+        try { return driver.findElement(By.cssSelector(css)); } catch (Exception ignored) {}
+        try { return driver.findElement(By.xpath(xpath)); } catch (Exception ignored) {}
+        throw new NoSuchElementException("Element not found: " + id + ", " + name + ", " + css + ", " + xpath);
+    }
 
-    public ApiExplorerPage open() { driver.get(ConfigManager.getApiBaseUrl() + "/explorer"); return this; }
-    public boolean isHeaderVisible() { return isVisible(header); }
-    public boolean isBaseUrlVisible() { return isVisible(baseUrl); }
-    public boolean isEndpointGroupVisible() { return isVisible(endpointList); }
-    public boolean isCodeSamplePanelVisible() { return isVisible(codePanel); }
-    public void selectEndpoint(String endpoint) { click(By.xpath(String.format("//div[contains(@class,'endpoint') and contains(text(), '%s')", endpoint))); }
-    public void clickSendRequest() { click(sendButton); }
-    public String getResponseStatus() { return isVisible(responseStatus) ? getText(responseStatus) : ""; }
-    public String getResponseBody() { return isVisible(responseBody) ? getText(responseBody) : ""; }
-    public void setQuickAuthToTestUser() { click(quickAuth); }
+    public ApiExplorerPage open() { driver.get(ConfigManager.getBaseUrl() + "/app/api-explorer"); return this; }
+
+    public boolean isHeaderVisible() {
+        try {
+            WebElement el = findElement("api-header", "", "[data-test='api-header'], h1, .api-header", "//h1[contains(.,'API Explorer')]" );
+            return el.isDisplayed();
+        } catch (Exception e) { return false; }
+    }
+
+    public boolean isBaseUrlVisible() {
+        try {
+            WebElement el = findElement("api-base-url", "", "[data-test='api-base-url'], .api-base-url", "//*[contains(text(),'Base URL')]" );
+            return el.isDisplayed();
+        } catch (Exception e) { return false; }
+    }
+
+    public boolean isEndpointGroupVisible() {
+        try {
+            WebElement el = findElement("endpoint-list", "", "[data-test='endpoint-list'], .endpoint-list", "//div[contains(@class,'endpoint-list')]" );
+            return el.isDisplayed();
+        } catch (Exception e) { return false; }
+    }
+
+    public boolean isCodeSamplePanelVisible() {
+        try {
+            WebElement el = findElement("code-panel", "", "[data-test='code-panel'], .code-sample", "//div[contains(@class,'code-sample')]" );
+            return el.isDisplayed();
+        } catch (Exception e) { return false; }
+    }
+
+    public void selectEndpoint(String endpoint) {
+        WebElement el = findElement("", "", "", String.format("//div[contains(@class,'endpoint') and contains(text(), '%s')]", endpoint));
+        el.click();
+    }
+
+    public void clickSendRequest() {
+        WebElement el = findElement("send-request", "", "[data-test='send-request'], button:contains('Send')", "//button[contains(.,'Send')]" );
+        el.click();
+    }
+
+    public String getResponseStatus() {
+        try {
+            WebElement el = findElement("response-status", "", "[data-test='response-status'], .response-status", "//*[contains(@class,'response-status')]" );
+            return el.getText();
+        } catch (Exception e) { return ""; }
+    }
+
+    public String getResponseBody() {
+        try {
+            WebElement el = findElement("response-body", "", "[data-test='response-body'], .response-body", "//*[contains(@class,'response-body')]" );
+            return el.getText();
+        } catch (Exception e) { return ""; }
+    }
+
+    public void setQuickAuthToTestUser() {
+        WebElement el = findElement("quick-auth", "", "[data-test='quick-auth']", "//button[contains(.,'Test User')]" );
+        el.click();
+    }
 }

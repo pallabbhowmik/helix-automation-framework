@@ -11,5 +11,4 @@ plugins {
 }
 
 rootProject.name = 'helix-automation'
-// Keep the small 'utilities' module if present — app/list were example modules and have been removed
-include('utilities')
+// This is a single-project build used for the automation framework
