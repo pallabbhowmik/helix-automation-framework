@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Home Navigation Suite" parallel="false">
-    <test name="HomeNavigation">
-        <classes>
-            <class name="com.helix.automation.tests.ui.HomeNavigationTests"/>
-        </classes>
-    </test>
-</suite>
