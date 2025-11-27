@@ -36,9 +36,9 @@ public class ConfigManagerTest {
         ConfigManager.reload();
 
         String base = ConfigManager.getBaseUrl();
-        Assert.assertEquals(base, "https://classpath.dev.passthenote.test", "Should read base url from classpath config-dev.properties");
+        Assert.assertEquals(base, "https://www.passthenote.com", "Should read base url from classpath config-dev.properties");
         String api = ConfigManager.getApiBaseUrl();
-        Assert.assertEquals(api, "https://api.classpath.dev.passthenote.test");
+        Assert.assertEquals(api, "https://www.passthenote.com/api/v1");
     }
 
     @Test
