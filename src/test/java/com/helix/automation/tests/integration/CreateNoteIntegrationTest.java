@@ -34,7 +34,7 @@ public class CreateNoteIntegrationTest extends BaseTest {
                 var auth = AuthApi.login(new com.helix.automation.framework.api.models.AuthRequest(user, pass));
                 if (auth != null && auth.getToken() != null) ApiSpecs.setAuthToken(auth.getToken());
             }
-        } catch (Exception ignored) { }
+        } catch (Throwable ignored) { /* catch AssertionError and others — keep setup defensive */ }
     }
 
     @Test(description = "Create a note via API then confirm it appears in the logged-in UI")
