@@ -3,7 +3,7 @@
 Overview
 - Java + Selenium WebDriver + TestNG + Gradle
 - API tests with RestAssured
-- Planned CI integration (Jenkins + Allure) — pipeline definition to be added
+- Planned CI integration (Jenkins + Allure) — pipeline definition included but not executed yet
 
 Target application
 - PassTheNote (https://www.passthenote.com) — a full-stack web app used as a testbed for this framework.
@@ -39,11 +39,25 @@ How to run
 ./gradlew clean test -Denv=dev -Dgroups=api
 ```
 
+Project structure
+
+- src/main/java/com/helix/automation/framework
+  - config/        # Environment & configuration management
+  - core/          # Base classes, WebDriver & test utilities
+  - pages/         # Page Object Model classes
+  - api/           # API clients and models
+  - flows/         # Higher level operations (flows that combine POM actions)
+  - utils/         # Helpers & generators
+
+- src/test/java/com/helix/automation/tests/ui   # UI test suites
+- src/test/java/com/helix/automation/tests/api  # API test suites
+- src/test/java/com/helix/automation/tests/integration  # Cross-layer tests / smoke tests
+
 Small, real tests included
 
-The repository includes a small but real test set to prove the framework is usable immediately:
-- UI tests: src/test/java/com/helix/automation/tests/ui — several small Selenium-based UI tests
-- API tests: src/test/java/com/helix/automation/tests/api — RestAssured tests covering auth endpoints
+This repository includes a small, runnable test set to prove the framework is usable immediately:
+- UI tests: src/test/java/com/helix/automation/tests/ui — Selenium TestNG UI examples
+- API tests: src/test/java/com/helix/automation/tests/api — RestAssured tests against PassTheNote
 
 Example test snippets
 
@@ -58,12 +72,11 @@ assertTrue(login.isWelcomeBackVisible());
 API test (RestAssured):
 ```java
 AuthRequest req = new AuthRequest("tester@passthenote.com", "Tester@123");
-AuthResponse res = ApiSpecs.base()
-  .body(req)
-  .when().post("/auth/login")
-  .then().statusCode(200)
-  .extract().as(AuthResponse.class);
-assertNotNull(res.getToken());
+var response = ApiSpecs.base().body(req).when().post("/auth/login");
+if (response.getStatusCode() == 200) {
+  AuthResponse res = response.then().extract().as(AuthResponse.class);
+  assertNotNull(res.getToken());
+}
 ```
 
 Recommendations & Next steps

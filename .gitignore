@@ -4,6 +4,10 @@
 # Ignore Gradle build output directory
 build
 
+# ignore compiled / packaged bins produced by some builds
+bin/
+*/bin/
+
 # Local env files - not checked in
 .env.config.local
 .env.local
