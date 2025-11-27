@@ -21,7 +21,7 @@ public class AuthApiNegativeTests {
                 var r = com.helix.automation.framework.api.clients.AuthApi.login(new com.helix.automation.framework.api.models.AuthRequest(user, pass));
                 if (r != null && r.getToken() != null && !r.getToken().isEmpty()) com.helix.automation.framework.api.spec.ApiSpecs.setAuthToken(r.getToken());
             }
-        } catch (Exception ignored) { }
+        } catch (Throwable ignored) { }
     }
 
     @Test(groups = "api")

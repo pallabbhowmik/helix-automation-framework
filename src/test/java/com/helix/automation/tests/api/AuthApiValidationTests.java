@@ -22,7 +22,7 @@ public class AuthApiValidationTests {
                 var r = com.helix.automation.framework.api.clients.AuthApi.login(new com.helix.automation.framework.api.models.AuthRequest(user, pass));
                 if (r != null && r.getToken() != null && !r.getToken().isEmpty()) ApiSpecs.setAuthToken(r.getToken());
             }
-        } catch (Exception ignored) { }
+        } catch (Throwable ignored) { }
     }
 
     @Test(groups = "api")

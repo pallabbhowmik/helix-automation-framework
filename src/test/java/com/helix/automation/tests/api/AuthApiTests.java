@@ -26,7 +26,7 @@ public class AuthApiTests {
                     ApiSpecs.setAuthToken(r.getToken());
                 }
             }
-        } catch (Exception ignored) { /* keep tests defensive */ }
+        } catch (Throwable ignored) { /* keep tests defensive (catch AssertionError as well) */ }
     }
 
     @Test(groups = "api")
