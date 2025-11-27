@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Notes Suite" parallel="false">
+    <test name="Notes">
+        <classes>
+            <class name="com.helix.automation.tests.ui.NotesTests"/>
+        </classes>
+    </test>
+</suite>

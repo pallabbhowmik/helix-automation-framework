@@ -5,6 +5,7 @@ import io.restassured.specification.RequestSpecification;
 
 public class ApiSpecs {
     public static RequestSpecification base() {
-        return RestAssured.given().baseUri(System.getProperty("api.baseUrl", "http://localhost:8080"));
+        // default to the target application host as requested
+        return RestAssured.given().baseUri(System.getProperty("api.baseUrl", "https://www.passthenote.com"));
     }
 }
