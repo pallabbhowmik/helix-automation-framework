@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="API Explorer Suite" parallel="false">
+    <test name="ApiExplorer">
+        <classes>
+            <class name="com.helix.automation.tests.ui.ApiExplorerTests"/>
+        </classes>
+    </test>
+</suite>

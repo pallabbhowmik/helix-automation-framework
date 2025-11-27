@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+// ...existing code...
+}
+
+group = 'com.helix.automation'
+version = '1.0.0'
+
+repositories { mavenCentral() }
+
+dependencies {
+    implementation "org.seleniumhq.selenium:selenium-java:4.35.0"
+    testImplementation "org.testng:testng:7.11.0"
+    implementation "io.rest-assured:rest-assured:5.5.6"
+    implementation "io.github.bonigarcia:webdrivermanager:5.9.2"
+    implementation "org.slf4j:slf4j-api:2.0.16"
+    implementation "org.apache.logging.log4j:log4j-slf4j2-impl:2.24.1"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.18.0"
+}
+
+test {
+    useTestNG() {
+        // ensure TestNG listener/transformer are wired for Gradle test runs
+        listeners << 'com.helix.automation.framework.core.RetryAnnotationTransformer'
+        listeners << 'com.helix.automation.framework.core.TestListener'
+    }
+    //systemProperty "allure.results.directory", "$buildDir/allure-results"
+}

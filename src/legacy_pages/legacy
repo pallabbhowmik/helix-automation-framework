@@ -1,0 +1,31 @@
+package com.passthenote.pages.legacy;
+
+// NOTE: legacy page object kept for reference during refactor. Use com.passthenote.framework.pages.AdminPage instead.
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class AdminPage extends BasePage {
+    private final By dashboardWidget = By.cssSelector("[data-test='admin-widget'], .dashboard-widget");
+    private final By forbiddenMsg = By.cssSelector("[data-test='forbidden'], .forbidden-message, .MuiAlert-message");
+
+    public AdminPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public void open() {
+        driver.get("https://www.passthenote.com/admin");
+    }
+
+    public boolean isDashboardVisible() {
+        return isVisible(dashboardWidget);
+    }
+
+    public boolean isForbiddenMessageVisible() {
+        return isVisible(forbiddenMsg);
+    }
+
+    public String getForbiddenMessageText() {
+        return getText(forbiddenMsg);
+    }
+}

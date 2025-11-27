@@ -3,7 +3,10 @@
 Overview
 - Java + Selenium WebDriver + TestNG + Gradle
 - API tests with RestAssured
-- Modular TestNG suites and CI pipeline (Jenkins + Allure)
+- Planned CI integration (Jenkins + Allure) — pipeline definition to be added
+
+Target application
+- PassTheNote (https://www.passthenote.com) — a full-stack web app used as a testbed for this framework.
 
 Configuration
 - The framework loads configuration with this precedence (highest → lowest):
@@ -34,6 +37,33 @@ How to run
 
 ```powershell
 ./gradlew clean test -Denv=dev -Dgroups=api
+```
+
+Small, real tests included
+
+The repository includes a small but real test set to prove the framework is usable immediately:
+- UI tests: src/test/java/com/helix/automation/tests/ui — several small Selenium-based UI tests
+- API tests: src/test/java/com/helix/automation/tests/api — RestAssured tests covering auth endpoints
+
+Example test snippets
+
+UI test (Selenium / TestNG):
+```java
+// example: open login page and assert welcome header
+LoginPage login = new LoginPage();
+login.open();
+assertTrue(login.isWelcomeBackVisible());
+```
+
+API test (RestAssured):
+```java
+AuthRequest req = new AuthRequest("tester@passthenote.com", "Tester@123");
+AuthResponse res = ApiSpecs.base()
+  .body(req)
+  .when().post("/auth/login")
+  .then().statusCode(200)
+  .extract().as(AuthResponse.class);
+assertNotNull(res.getToken());
 ```
 
 Recommendations & Next steps
