@@ -9,10 +9,10 @@ import org.openqa.selenium.NoSuchElementException;
 public class SignupPage extends BasePage {
     // Helper to try multiple locator strategies in order: id, name, css, xpath
     private WebElement findElement(String id, String name, String css, String xpath) {
-        try { return driver.findElement(By.id(id)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.name(name)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.cssSelector(css)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.xpath(xpath)); } catch (Exception ignored) {}
+        try { return $(By.id(id)); } catch (Exception ignored) {}
+        try { return $(By.name(name)); } catch (Exception ignored) {}
+        try { return $(By.cssSelector(css)); } catch (Exception ignored) {}
+        try { return $(By.xpath(xpath)); } catch (Exception ignored) {}
         throw new NoSuchElementException("Element not found: " + id + ", " + name + ", " + css + ", " + xpath);
     }
 

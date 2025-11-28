@@ -15,7 +15,7 @@ public class AuthApiTests {
     @BeforeClass
     public void setBaseToTarget() {
         // ensure tests default to the public PassTheNote host
-        System.setProperty("api.baseUrl", System.getProperty("api.baseUrl", "https://www.passthenote.com"));
+        System.setProperty("api.baseUrl", System.getProperty("api.baseUrl", "https://www.passthenote.com/api/v1"));
         // attempt to authenticate using configured credentials so other API calls use a valid token
         try {
             String user = ConfigManager.getUsername();

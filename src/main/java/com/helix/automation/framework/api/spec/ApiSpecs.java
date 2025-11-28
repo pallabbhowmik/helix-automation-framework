@@ -17,7 +17,7 @@ public class ApiSpecs {
         String base = System.getProperty("api.baseUrl");
         if (base == null || base.isEmpty()) base = com.helix.automation.framework.config.ConfigManager.getApiBaseUrl();
         if (base == null || base.isEmpty()) base = "https://www.passthenote.com/api/v1";
-        RequestSpecification req = RestAssured.given().baseUri(base);
+            RequestSpecification req = RestAssured.given().baseUri(System.getProperty("api.baseUrl", "https://www.passthenote.com/api/v1"));
         if (authToken != null && !authToken.isEmpty()) req = req.header("Authorization", "Bearer " + authToken);
         return req;
     }
