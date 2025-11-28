@@ -2,64 +2,24 @@
 
 Helix is a small, practical automation framework for UI and API testing. It is implemented to demonstrate engineering-grade automation patterns while exercising the public PassTheNote sandbox (https://www.passthenote.com).
 
-This repository contains:
-- A Page Object Model (POM) layer for UI interactions
-- API clients and request/response models (RestAssured)
-- Test suites and example end-to-end flows that combine API and UI
-- A configuration loader that supports layered overrides (-D system props, environment variables, .env.config, and classpath properties)
+Maintainer
+----------
+Pallab Bhowmik
+Senior SDET
 
-Target application
-------------------
-All tests target the public PassTheNote sandbox at:
+If this project helps you learn automation, please fork, contribute, and share improvements.
 
-https://www.passthenote.com
+Architecture overview
+---------------------
+The framework follows a small, layered architecture that makes tests readable and maintainable:
 
-Important: do not include sub-paths (for example, `/app`) in the base URL configuration — use the exact host above.
+- api: RestAssured specs, clients, and models
+- config: configuration loader supporting layered overrides (system props, env vars, .env.config, classpath)
+- core: driver lifecycle, base test fixtures, listeners and helpers
+- pages: page objects and stable locators
+- flows: higher-level business flows that reuse page objects
 
-Repository layout
------------------
-src/main/java/com/helix/automation/framework
-- api/        - RestAssured specifications, clients and DTOs
-- config/     - ConfigManager: layered configuration and helpers
-- core/       - Driver lifecycle, BasePage, BaseTest, listeners, and utilities
-- pages/      - Page objects and UI interaction helpers
-- flows/      - Reusable business flows (compose actions across multiple pages)
-
-src/test/java/com/helix/automation/tests
-- ui/         - Selenium UI test suites
-- api/        - RestAssured API tests
-- integration - Tests combining API seeding + UI verification
-
-Configuration
--------------
-Configuration is loaded with the following precedence (highest → lowest):
-1. System properties (eg. -Dweb.baseUrl)
-2. Environment variables
-3. `.env.config` at the repository root (not committed in normal workflows; use `.env.example` as a template)
-4. Classpath properties (config-<env>.properties)
-
-The default values used by the repository are safe for the public sandbox. Example `.env.config`:
-
-BASE_URL=https://www.passthenote.com
-API_BASE_URL=https://www.passthenote.com/api/v1
-USERNAME=admin@passthenote.com
-PASSWORD=Admin@123
-
-Running tests
--------------
-Build project without running tests:
-```powershell
-./gradlew clean build -x test
-```
-
-Run the full test-suite (defaults to env=dev):
-```powershell
-./gradlew clean test -Denv=dev -Dbrowser=chrome
-```
-
-Run only groups (example: api or ui):
-```powershell
-./gradlew clean test -Denv=dev -Dgroups=api
+This design keeps UI and API logic reusable and isolated, and makes it straightforward to add new modules and end-to-end flows.
 ./gradlew clean test -Denv=dev -Dgroups=ui
 ```
 
