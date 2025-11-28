@@ -1,7 +1,5 @@
 # Helix Automation Framework
 
-[![CI status](https://github.com/pallabbhowmik/helix-automation-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/pallabbhowmik/helix-automation-framework/actions)
-
 Helix is a small, practical automation framework for UI and API testing. It demonstrates engineering-grade automation patterns while exercising the public PassTheNote sandbox (https://www.passthenote.com).
 
 Table of contents
@@ -113,11 +111,6 @@ Long-running / cross-layer patterns
 - Prefer API → UI chaining for reliable E2E flows: seed data using API and verify via UI.
 - Keep tests self-contained and clean up resources where possible to avoid shared-state flakiness.
 
-Screenshot
-----------
-Below is a sample visual showing a successful UI flow or app screenshot. (placeholder image included in `docs/images`)
-
-![passTheNote-sample](docs/images/test-run.svg)
 
 Roadmap & contributing
 ----------------------
