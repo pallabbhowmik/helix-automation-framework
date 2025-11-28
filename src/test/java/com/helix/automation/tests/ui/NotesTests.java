@@ -6,6 +6,11 @@ import org.testng.annotations.Test;
 import com.helix.automation.tests.BaseTest;
 
 public class NotesTests extends BaseTest {
+    @org.testng.annotations.BeforeClass
+    public void setupClass() {
+        login();
+    }
+
     @Test
     public void testComposeNoteVisibleWhenLoggedIn() {
         NotesPage notes = new NotesPage();

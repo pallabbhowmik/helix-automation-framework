@@ -1,0 +1,56 @@
+{
+    "validUsers": [
+        {
+            "email": "testuser@passthenote.com",
+            "password": "Test@1234",
+            "fullName": "Test User"
+        },
+        {
+            "email": "admin@passthenote.com",
+            "password": "Admin@123",
+            "fullName": "Admin User"
+        }
+    ],
+    "invalidUsers": [
+        {
+            "email": "invalid@example.com",
+            "password": "WrongPassword",
+            "expectedError": "Invalid credentials"
+        },
+        {
+            "email": "notanemail",
+            "password": "Test@1234",
+            "expectedError": "Invalid email format"
+        }
+    ],
+    "signupData": [
+        {
+            "fullName": "New User",
+            "email": "newuser{timestamp}@passthenote.com",
+            "password": "NewUser@123",
+            "confirmPassword": "NewUser@123"
+        },
+        {
+            "fullName": "Another User",
+            "email": "anotheruser{timestamp}@passthenote.com",
+            "password": "Strong@Pass123",
+            "confirmPassword": "Strong@Pass123"
+        }
+    ],
+    "invalidSignupData": [
+        {
+            "fullName": "Mismatch Password",
+            "email": "mismatch{timestamp}@passthenote.com",
+            "password": "Password@123",
+            "confirmPassword": "Different@123",
+            "expectedError": "match"
+        },
+        {
+            "fullName": "",
+            "email": "nofullname{timestamp}@passthenote.com",
+            "password": "Test@1234",
+            "confirmPassword": "Test@1234",
+            "expectedError": "required"
+        }
+    ]
+}

@@ -6,6 +6,11 @@ import org.testng.annotations.Test;
 import com.helix.automation.tests.BaseTest;
 
 public class ApiExplorerTests extends BaseTest {
+    @org.testng.annotations.BeforeClass
+    public void setupClass() {
+        login();
+    }
+
     @Test
     public void testApiExplorerLoads() {
         ApiExplorerPage api = new ApiExplorerPage();

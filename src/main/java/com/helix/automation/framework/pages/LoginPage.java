@@ -4,75 +4,58 @@ package com.helix.automation.framework.pages;
 import com.helix.automation.framework.core.BasePage;
 import com.helix.automation.framework.config.ConfigManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.NoSuchElementException;
 
 public class LoginPage extends BasePage {
-    // Helper to try multiple locator strategies in order: id, name, css, xpath
-    private WebElement findElement(String id, String name, String css, String xpath) {
-        try { return driver.findElement(By.id(id)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.name(name)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.cssSelector(css)); } catch (Exception ignored) {}
-        try { return driver.findElement(By.xpath(xpath)); } catch (Exception ignored) {}
-        throw new NoSuchElementException("Element not found: " + id + ", " + name + ", " + css + ", " + xpath);
-    }
+    // Locators
+    private final By heading = By.xpath("//h1[contains(.,'Welcome Back') or contains(.,'Sign In')]");
+    private final By emailInput = By.xpath("//input[@type='email' or @name='email']");
+    private final By passwordInput = By.xpath("//input[@type='password' or @name='password']");
+    private final By signInButton = By.xpath("//button[contains(.,'Sign In') or @type='submit']");
+    private final By errorMessage = By.xpath("//*[contains(@class,'error') or contains(@class,'MuiAlert')]");
+    private final By forgotPasswordLink = By.xpath("//a[contains(@href,'forgot') or contains(.,'Forgot')]");
 
-    public LoginPage open() { driver.get(ConfigManager.getBaseUrl() + "/auth/login"); return this; }
+    public LoginPage open() {
+        driver.get(ConfigManager.getBaseUrl() + "/auth/login");
+        return this;
+    }
 
     public boolean isWelcomeBackVisible() {
         try {
-            WebElement el = findElement(
-                "auth-heading", "", "[data-test='auth-heading'], h1", "//h1[contains(.,'Welcome Back')]"
-            );
-            return el.isDisplayed() && el.getText().toLowerCase().contains("welcome back");
-        } catch (Exception e) { return false; }
+            return waitForVisible(heading).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void enterEmail(String emailStr) {
-        WebElement el = findElement(
-            "auth-email", "email", "[data-test='auth-email'], input[name='email']", "//input[@type='email']"
-        );
-        el.clear();
-        el.sendKeys(emailStr);
+        type(emailInput, emailStr);
     }
 
     public void enterPassword(String pwd) {
-        WebElement el = findElement(
-            "auth-password", "password", "[data-test='auth-password'], input[name='password']", "//input[@type='password']"
-        );
-        el.clear();
-        el.sendKeys(pwd);
+        type(passwordInput, pwd);
     }
 
     public void clickSignIn() {
-        WebElement el = findElement(
-            "auth-login-submit", "", "[data-test='auth-login-submit'], button[type='submit']", "//button[contains(.,'Sign In') or @type='submit']"
-        );
-        el.click();
+        click(signInButton);
     }
 
     public boolean isErrorVisible() {
         try {
-            WebElement el = findElement(
-                "auth-error", "", "[data-test='auth-error'], .error-message, .MuiAlert-message", "//*[contains(@class,'error') or contains(@class,'MuiAlert-message')]"
-            );
-            return el.isDisplayed();
-        } catch (Exception e) { return false; }
+            return waitForVisible(errorMessage).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public String getErrorText() {
         try {
-            WebElement el = findElement(
-                "auth-error", "", "[data-test='auth-error'], .error-message, .MuiAlert-message", "//*[contains(@class,'error') or contains(@class,'MuiAlert-message')]"
-            );
-            return el.getText();
-        } catch (Exception e) { return ""; }
+            return getText(errorMessage);
+        } catch (Exception e) {
+            return "";
+        }
     }
 
     public void clickForgotPassword() {
-        WebElement el = findElement(
-            "forgot-password", "", "[data-test='forgot-password'], a[href*='forgot']", "//a[contains(@href,'forgot')]"
-        );
-        el.click();
+        click(forgotPasswordLink);
     }
 }

@@ -1,0 +1,47 @@
+{
+    "createNoteData": [
+        {
+            "title": "Test Note 1",
+            "content": "This is a test note for automation testing",
+            "tags": [
+                "test",
+                "automation"
+            ]
+        },
+        {
+            "title": "Meeting Notes",
+            "content": "Important meeting discussion points",
+            "tags": [
+                "meeting",
+                "work"
+            ]
+        },
+        {
+            "title": "Personal Reminder",
+            "content": "Don't forget to buy groceries",
+            "tags": [
+                "personal",
+                "reminder"
+            ]
+        }
+    ],
+    "editNoteData": [
+        {
+            "originalTitle": "Old Title",
+            "newTitle": "Updated Title",
+            "newContent": "Updated content for the note"
+        }
+    ],
+    "filterData": [
+        {
+            "filterType": "tag",
+            "filterValue": "work",
+            "expectedCount": 5
+        },
+        {
+            "filterType": "search",
+            "filterValue": "meeting",
+            "expectedCount": 2
+        }
+    ]
+}
